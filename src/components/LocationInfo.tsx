@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 
 export const LocationInfo = () => {
   const [city, setCity] = useState<string>("Loading city...");
-  const [temperature, setTemperature] = useState<string>("--°");
   const [time, setTime] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -93,20 +92,6 @@ export const LocationInfo = () => {
             setCity(cityFromTimezone);
           }
           
-          // Generate a realistic temperature based on latitude
-          // This avoids API calls that might fail
-          const season = new Date().getMonth() >= 3 && new Date().getMonth() <= 8 
-            ? 'summer' 
-            : 'winter';
-            
-          const baseTemp = season === 'summer' ? 25 : 10;
-          // Adjust based on latitude (cooler toward poles, warmer toward equator)
-          const latAdjustment = Math.abs(latitude) > 45 ? -5 : 
-                               Math.abs(latitude) < 23 ? 5 : 0;
-          
-          const mockTemp = Math.round(baseTemp + latAdjustment + (Math.random() * 8 - 4));
-          setTemperature(`${mockTemp}°`);
-          
           setLoading(false);
         } catch (err) {
           console.error("Error processing location data:", err);
@@ -140,13 +125,6 @@ export const LocationInfo = () => {
     } catch (err) {
       setCity("Your City");
     }
-    
-    // Generate random but realistic temperature
-    const month = new Date().getMonth();
-    const isSummer = month >= 3 && month <= 8;
-    const baseTemp = isSummer ? 25 : 10;
-    const mockTemp = Math.round(baseTemp + (Math.random() * 8 - 4));
-    setTemperature(`${mockTemp}°`);
   };
 
   if (loading) {
@@ -164,8 +142,6 @@ export const LocationInfo = () => {
       <span>{time}</span>
       <span>•</span>
       <span>{city}</span>
-      <span>•</span>
-      <span>{temperature}</span>
     </div>
   );
 };

@@ -2,20 +2,17 @@ import { useEffect, useState } from "react";
 
 const greetings = [
   "Namaste",      // Hindi
+    "Hello",      // English
+  "Namaskar",     // Marathi
   "Nomoshkar",    // Bengali
   "Vanakkam",     // Tamil
   "Namaskara",    // Kannada
   "Sat Sri Akal", // Punjabi
-  "Hello",        // English
-  "こんにちは",   // Japanese
-  "안녕하세요",   // Korean
+  "Konnichiwa",   // Japanese
+  "Annyeonghaseyo", // Korean
   "Hola",         // Spanish
-  "Bonjour",      // French
   "Ciao",         // Italian
   "Hallo",        // German
-  "Olá",          // Portuguese
-  "Здравствуйте", // Russian
-  "你好",         // Chinese
   "مرحبا",        // Arabic
 ];
 
