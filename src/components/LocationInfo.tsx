@@ -56,21 +56,41 @@ export const LocationInfo = () => {
         try {
           const { latitude, longitude } = position.coords;
           
-          // Try to get city name using TimeZone as a fallback method
+          // Try to get actual city name using reverse geocoding API
           try {
-            // This is a simpler, more reliable approach than making API calls
+            // Using OpenStreetMap's free Nominatim API for reverse geocoding
+            const response = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10&addressdetails=1`,
+              {
+                headers: {
+                  'User-Agent': 'Portfolio-Website'
+                }
+              }
+            );
+            
+            if (response.ok) {
+              const data = await response.json();
+              const city = data.address?.city || 
+                          data.address?.town || 
+                          data.address?.village || 
+                          data.address?.county ||
+                          data.address?.state ||
+                          "Your City";
+              setCity(city);
+            } else {
+              throw new Error("Geocoding API failed");
+            }
+          } catch (err) {
+            console.warn("Could not determine city from coordinates, using timezone:", err);
+            // Fallback to timezone method
             const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
             let cityFromTimezone = timezone.split('/').pop()?.replace(/_/g, ' ') || "Your City";
             
-            // Further clean up the city name
             if (cityFromTimezone.includes('/')) {
               cityFromTimezone = cityFromTimezone.split('/').pop() || "Your City";
             }
             
             setCity(cityFromTimezone);
-          } catch (err) {
-            console.warn("Could not determine city from timezone:", err);
-            setCity("Your City");
           }
           
           // Generate a realistic temperature based on latitude
@@ -131,19 +151,21 @@ export const LocationInfo = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center text-white animate-pulse">
-        <h1 className="mb-2">{time}</h1>
-        <h2 className="mb-4">Locating...</h2>
-        <h3>--°</h3>
+      <div className="flex items-center gap-2 text-white text-xs opacity-60">
+        <span>{time}</span>
+        <span>•</span>
+        <span>Locating...</span>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col items-center text-white">
-      <h1 className="mb-2">{time}</h1>
-      <h2 className="mb-4">{city}</h2>
-      <h3>{temperature}</h3>
+    <div className="flex items-center gap-2 text-white text-xs opacity-80">
+      <span>{time}</span>
+      <span>•</span>
+      <span>{city}</span>
+      <span>•</span>
+      <span>{temperature}</span>
     </div>
   );
 };

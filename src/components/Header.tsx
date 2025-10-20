@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { LocationInfo } from "./LocationInfo";
 
 export const Header = () => {
   const [showLogo, setShowLogo] = useState(false);
@@ -30,6 +31,8 @@ export const Header = () => {
           />
         </svg>
       </div>
+
+      <LocationInfo />
 
       <div className="about text-xs">
         v2.0.0

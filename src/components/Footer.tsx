@@ -18,6 +18,11 @@ export const Footer = () => {
           text="Github"
           className="link text-xs"
         />
+        <TypedLink
+          href="https://twitter.com/tishank5"
+          text="Twitter"
+          className="link text-xs"
+        />
       </nav>
     </footer>
   );
