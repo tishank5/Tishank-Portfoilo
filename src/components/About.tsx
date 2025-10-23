@@ -7,7 +7,7 @@ export const About = () => {
       <p className="text-sm">
         <Typer 
           text="Hey there! I'm Tishank, a creative developer exploring generative art and creative coding. I specialize in React, Vite, HTML, CSS, and JavaScript, crafting clean, responsive, and dynamic interfaces. I enjoy exploring design systems, animations, and modern UI trends to bring ideas to life through code."
-          speed={30}
+          speed={20}
         />
       </p>
     </div>
